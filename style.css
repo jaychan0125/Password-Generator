@@ -10,7 +10,6 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  line-height: 1.5;
 }
 
 body {
@@ -43,10 +42,6 @@ header {
   padding: 30px 40px;
 }
 
-.card-header {
-  text-align: center;
-}
-
 .card-header::after {
   content: " ";
   display: block;
@@ -57,16 +52,6 @@ header {
 
 .card-body {
   min-height: 100px;
-}
-
-/* HELLO */
-.pwdConditions {
-  padding: 10px;
-  display: grid;
-  grid-template-columns: auto auto;
-  row-gap: 5px;
-  column-gap: 10px;
-  justify-content: center;
 }
 
 .card-footer {
