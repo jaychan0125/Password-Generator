@@ -16,70 +16,84 @@ generateBtn.addEventListener("click", writePassword);
 
 
 
+function generatePassword() {
 
+//password length prompt:
+var pwdLength;
+while (pwdLength < 8 || pwdLength > 128 || isNaN(pwdLength)) {  //if any of these are true(the input is invalid) code will prompt again.
+  pwdLength = prompt(`How long would you like your password to be? \nMinimum characters: 8, maximum characters: 128.`);
+}
+//use a 'WHILE loop'; rather than an 'for loop' BECAUSE the prompt continues to loop UNTIL the conditions are satisfied.
+//you DO NOT KNOW how many times the loop will execute before the required criteria are met
+//ONCE all loop conditions are met, it will exit the loop
+//'for loops' are designed to iterate a fixed number of times.
+console.log(`The desired length of your password is: ${pwdLength} characters.`);
 
-
-// var upperCASE = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+//set the characters that can be used(in a string) in their respective variables
 var upperCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-console.log(upperCASE[5]);
-// var lowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var lowerCase = 'abcdefghijklmnopqrstuvwxyz';
-//var numbers = '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'; 
 var numbers = '0123456789';
-//var specialChar =  
 var specialChar = '`-=~!@#$%^&*()_+<>,./?:;[]{}';
 
+//ensure at least one confirm is true before continuing 
+while (true) {
+  var selUpper = confirm(`Would you like there to be UPPERCASE characters?`);
+  var selLower = confirm(`Would you like there to be lowercase characters?`);
+  var selNumbers = confirm(`Would you like to use number5?`);
+  var selSpecial = confirm(`Would you like to use $pecial characters?`);
+  if (selUpper == false && selLower == false && selNumbers == false && selSpecial == false) {
+    alert(`Please choose at least one.`);
+    continue; //skip wahtever else happens and go back to the top of the loop
+  }
+  break; //break out of loop
+}
 
-var pwdLength = prompt(`How long would you like your password?`);
-console.log(pwdLength);
-
-var selUpper = confirm(`Would you like there to be UPPERCASE characters?`);
-console.log(selUpper);
-
-var selLower = confirm(`Would you like there to be lowercase characters?`);
-console.log(selLower);
-
-var selNumbers = confirm(`Would you like to use numbers?`);
-console.log(selNumbers);
-
-var selSpecial = confirm(`Would you like to use special characters?`);
-console.log(selSpecial);
+console.log(`Do you want Uppercases: ${selUpper}`);
+console.log(`Do you want Lowercases: ${selLower}`);
+console.log(`Do you want Numbers: ${selNumbers}`);
+console.log(`Do you want Symbols: ${selSpecial}`);
 
 //empty string of chracters I can use in my password
-var selectedCharacters = ''; //if prompts are true, add them to the array of usable characters
+var selectedCharacters = '';
+//empty string for newPwd. needs AT LEAST one of each selected character-type
+var newPwd = '';
 
-//if true, add to my selectedCharacters string. if false, don't add.
+//if prompt is true, add them to the string of usable characters
+//if prompt is true, ensure newPwd has at least one character
 if (selUpper) {
-  selectedCharacters += upperCASE;
+  selectedCharacters += upperCASE;  //adds characters to the 'selectedCharacters' string of usable characters for final newPwd
+  newPwd += upperCASE[(Math.floor(Math.random() * upperCASE.length))];  //adds ONE RANDOM character from selected character-type to final newPwd
 }
-console.log(selectedCharacters);
 
 if (selLower) {
   selectedCharacters += lowerCase;
+  newPwd += lowerCase[(Math.floor(Math.random() * lowerCase.length))];
 }
-console.log(selectedCharacters);
 
 if (selNumbers) {
   selectedCharacters += numbers;
+  newPwd += numbers[(Math.floor(Math.random() * numbers.length))];
 }
-console.log(selectedCharacters);
 
 if (selSpecial) {
   selectedCharacters += specialChar;
+  newPwd += specialChar[(Math.floor(Math.random() * specialChar.length))];
 }
-console.log(selectedCharacters);
-console.log(selectedCharacters.length)
 
-//picks a random index number from the string:selectedCharacters
-// var randomCharacter = selectedCharacters[Math.floor(Math.random() * selectedCharacters.length)];
-// console.log(randomCharacter);
+console.log(`Here are your usable characters: ${selectedCharacters}`);
+console.log(`There are ${selectedCharacters.length} usable characters for your password!`)
+console.log(`Your password will contain these characters: ${newPwd}`)
 
-var newPwd = '';
-console.log(newPwd)
-
-while (newPwd.length < 10) {
-  var randomCharacter = selectedCharacters[Math.floor(Math.random() * selectedCharacters.length)]; //put this inside the while loop so it runs for that many times. when it is outside, it only runs the one time so it keeps adding the same value
-  newPwd += randomCharacter;
+//while loop for unknown pwdLength variable. want it to go on for as many times until the newPwd length is less than the desired pwdLength, it will keep running   
+while (newPwd.length < pwdLength) { 
+  //picks a random index number from the string:selectedCharacters
+  var randomCharacter = selectedCharacters[Math.floor(Math.random() * selectedCharacters.length)]; //put this inside the while loop so it runs for as many times as stated by condition. when it is outside, it only runs the one time so it keeps adding the same value!
+  newPwd += randomCharacter; //adds the randomCharacter to the newPwd
 }
 console.log(newPwd)
+console.log(`Desired password length: ${pwdLength} \nNew password length: ${newPwd.length}`)
+
+return newPwd;  //want the function to have a return value of the newPwd
+}
+
 
